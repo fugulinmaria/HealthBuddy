@@ -1,0 +1,179 @@
+# The main interface can be either a Widget either a Layout
+
+GridLayoutExample:
+
+<WidgetsExample@GridLayout>:
+    cols: 3
+
+    ToggleButton:    #inside the toggle buton -- property --> state
+        text: "OFF"
+        on_state: root.on_toggle_button_state(self)
+        size_hint: None, 1
+        width: "100dp"
+
+    Button:
+        text: "Count"
+        on_press: root.on_button_click()    # if I want to talk about WidgetsExample we use root
+        disabled: not root.count_enabled    # !!!!!!!!
+
+    Label:
+        text: root.my_text    # binding automatically updated
+        font_name: "fonts\Lcd.ttf"   # Custom font
+        font_size: "50dp"
+        color: 1, .5, 1, 1
+
+    # Uncomment for the exercise solved by me to work 
+    # Label:
+    #    text: str(root.my_count)
+
+    Switch:
+        id: my_switch
+        on_active: root.on_switch_active(self)   # when we pass self -- in main.py --> widget
+        size_hint: None, 1
+        width: "100dp"
+        active: True     
+
+    Slider:
+        id: my_slider    # this provides an alias and this slider now can be used as a variable -- for binding
+        min: 0
+        max: 100
+        value: 50   # default value
+        # orientation: "vertical"
+        # on_value: root.on_slider_value(self)
+        disabled: not my_switch.active
+
+    Label:
+        text: str(int(my_slider.value))
+
+# LAYOUT
+
+<PageLayoutExample@PageLayout>:
+    MainWidget:
+    BoxLayoutExample:
+    AnchorLayoutExample:
+    GridLayoutExample:
+
+
+<ScrollViewExample@ScrollView>:
+    StackLayoutExample:    # the height changes when we change the size of the window
+        size_hint: 1, None
+        height: self.minimum_height  # computed in StackLayout
+
+<StackLayoutExample>:
+    # Puts the elements one after the other in multiple rows
+    # Needs to be given the size of each element
+    # Default ORIENTATION is top--bottom || left--right
+    
+    # left-right top-bottom --- we will give a str contraction ex: "rl-tb"
+    # orientation: "rl-tb"
+
+    # padding: ("20dp", "20dp", "20dp", "20dp")    # clock wise -- left right top bottom
+ 
+    # spacing: "20dp", "20dp"
+
+# GridLayoutExample:
+<GridLayoutExample>:
+    # One of this properties must be specified
+    # rows
+    # cols
+
+    # To modify the size of a col / row we need to change the sizes of all the buttons that are in it
+
+    rows: 2
+
+    Button:
+        text: "A"
+        size_hint: .5, 1
+        # Doesn't change size
+        # size_hint: None, 1
+        # width: "60dp"
+    BoxLayoutExample:
+    Button:
+        text: "C"
+    Button:
+        text: "D"
+        size_hint: .5, 1
+        # Doesn't change size
+        # size_hint: None, 1
+        # width: "60dp"
+    Button:
+        text: "E"
+    Button:
+        text: "f"
+
+
+<AnchorLayoutExample>:
+    # right, left, center
+    anchor_x: "center"
+
+    # bottom, top, center
+    anchor_y: "top"
+
+    BoxLayout:
+        size_hint: .2, .2
+
+        Button:
+            text: "A"
+            
+        Button:
+            text: "B"
+
+
+
+
+# BoxLayoutExample:
+<BoxLayoutExample>:
+    orientation: "horizontal"
+    Button:
+        text: "A"
+        
+        # Size Manipulation
+
+        size_hint: .5, .5      #Manual mode -- size_hint: None, None
+        # size: "100dp", "80dp"
+        # width: "100dp"
+        #height: "60dp"
+
+        # Position Manipulation
+        # pos_hint is a DICTIONARY
+
+        # -- pick only one --
+        # x, center_x, right  - VERTICAL
+        # y, center_y, top    - HORIZONTAl
+
+        pos_hint: {"center_y": 0.5}
+
+    # Embed a layout
+    BoxLayout:
+        orientation: "vertical"
+        spacing: "10dp"
+        Button:
+            text: "B1"
+        Button:
+            text: "B2"
+        Button:
+            text: "B3"
+        Button:
+            text: "B4"
+
+
+    Label:
+        text: "C"
+
+
+#MainWidget:
+<MainWidget>:
+#Widget is not taking care of the size and position of elements
+    Button:
+        text: "Hello"
+        size: "100dp", "80dp"
+        pos: "100dp", "200dp"
+        color: 0, 0, 1, 1
+
+    #Label displays only text on the screen
+    Label:
+        text: "Hello2"
+        size: "100dp", "80dp"
+        pos: "200dp", "300dp"
+        color: 1, 0, 0, 1       #rgba a-oppacity
+
